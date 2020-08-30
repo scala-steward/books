@@ -1,0 +1,4 @@
+CREATE TABLE books (
+  uuid UUID PRIMARY KEY,
+  name VARCHAR UNIQUE NOT NULL
+);
