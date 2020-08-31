@@ -1,5 +1,7 @@
 package xyz.funnycoding.http.routes
 
+import java.util.UUID
+
 import cats.effect._
 import cats.implicits._
 import org.http4s.Method._
@@ -12,11 +14,16 @@ import xyz.funnycoding.domain.data._
 import xyz.funnycoding.arbitrairies._
 
 class BooksRouteSpec extends HttpTestSuite {
-  forAll { _: List[Book] =>
+
+  def dataBooks(books: List[Book]) = new TestBooks {
+    override def findAll: IO[List[Book]] = books.pure[IO]
+  }
+
+  forAll { books: List[Book] =>
     spec("GET books [OK]") {
       GET(Uri.uri("/books")).flatMap { req =>
-        val routes = new BooksRoute[IO](new TestBooks).routes
-        assertHttpStatus(routes, req)(Status.Ok)
+        val routes = new BooksRoute[IO](dataBooks(books)).routes
+        assertHttp(routes, req)(Status.Ok, books)
       }
     }
   }
@@ -24,7 +31,7 @@ class BooksRouteSpec extends HttpTestSuite {
     spec("POST book [OK]") {
       POST(createBook, Uri.uri("/books")).flatMap { req =>
         val routes = new BooksRoute[IO](new TestBooks).routes
-        assertHttpStatus(routes, req)(Status.Ok)
+        assertHttpStatus(routes, req)(Status.Created)
       }
 
     }
@@ -33,7 +40,9 @@ class BooksRouteSpec extends HttpTestSuite {
 }
 
 protected class TestBooks extends Books[IO] {
-  override def create(createBook: CreateBook): IO[Unit] = IO.unit
+  override def create(createBook: CreateBook): IO[UUID] = IO {
+    UUID.randomUUID()
+  }
 
   override def findAll: IO[List[Book]] = List.empty[Book].pure[IO]
 }
