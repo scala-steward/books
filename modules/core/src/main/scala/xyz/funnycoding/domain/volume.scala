@@ -15,11 +15,6 @@ object volume {
   case class VolumeInfo(title: Title, subtitle: Subtitle, authors: List[Author])
   case class Volume(id: VolumeId, volumeInfo: VolumeInfo)
 
-  object VolumeIdParamMatcher {
-    def unapply(arg: String): Option[NonEmptyString] =
-      NonEmptyString.from(arg).toOption
-  }
-
   case class VolumeError(cause: String) extends NoStackTrace
 
 }

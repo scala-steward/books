@@ -15,10 +15,8 @@ import xyz.funnycoding.algebras.Volumes
 final class VolumesRoute[F[_]: Defer: MonadThrow: JsonDecoder](volumes: Volumes[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/volumes"
 
-  // object VolumeIdVar extends PathVar[VolumeId](str => NonEmptyString.from(str).toTry.map(VolumeId.apply))
-
   private val httpRoutes = HttpRoutes.of[F] {
-    case GET -> Root / VolumeIdParamMatcher(id) =>
+    case GET -> Root / NonEmptyStringPathVar(id) =>
       val get = volumes.get(VolumeId(id))
       get.flatMap {
         case Some(v) => Ok(v)
