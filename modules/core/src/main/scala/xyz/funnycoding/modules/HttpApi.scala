@@ -1,12 +1,13 @@
 package xyz.funnycoding.modules
 
-import cats.effect.{ Concurrent, Sync, Timer }
+import cats.effect._
+import cats.implicits._
 import org.http4s.server.middleware._
 
 import scala.concurrent.duration._
 import org.http4s._
 import org.http4s.implicits._
-import xyz.funnycoding.http.routes.BooksRoute
+import xyz.funnycoding.http.routes._
 
 object HttpApi {
   def make[F[_]: Concurrent: Timer](algebras: Algebras[F]): F[HttpApi[F]] = Sync[F].delay {
@@ -15,7 +16,8 @@ object HttpApi {
 }
 
 class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
-  private val booksRoute = new BooksRoute[F](algebras.books).routes
+  private val booksRoute   = new BooksRoute[F](algebras.books).routes
+  private val volumesRoute = new VolumesRoute[F](algebras.volumes).routes
 
   private val middleware: HttpRoutes[F] => HttpRoutes[F] = {
     { http: HttpRoutes[F] =>
@@ -35,5 +37,5 @@ class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
     }
   }
 
-  val httpApp: HttpApp[F] = loggers(middleware(booksRoute).orNotFound)
+  val httpApp: HttpApp[F] = loggers(middleware(booksRoute <+> volumesRoute).orNotFound)
 }

@@ -17,7 +17,7 @@ object Main extends IOApp {
       Logger[IO].info(s"Loaded config $cfg") *>
         AppResources.make[IO](cfg).use { res =>
           for {
-            algebras <- Algebras.make[IO](res.psql)
+            algebras <- Algebras.make[IO](res.psql, res.client)
             api <- HttpApi.make[IO](algebras)
             _ <- Logger[IO].info("starting web server")
             _ <- BlazeServerBuilder[IO](ExecutionContext.global)
