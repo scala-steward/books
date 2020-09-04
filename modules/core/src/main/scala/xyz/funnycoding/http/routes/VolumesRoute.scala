@@ -17,8 +17,7 @@ final class VolumesRoute[F[_]: Defer: MonadThrow: JsonDecoder](volumes: Volumes[
 
   private val httpRoutes = HttpRoutes.of[F] {
     case GET -> Root / NonEmptyStringPathVar(id) =>
-      val get = volumes.get(VolumeId(id))
-      get.flatMap {
+      volumes.get(VolumeId(id)).flatMap {
         case Some(v) => Ok(v)
         case None    => NotFound(s"volumeId ${id.value} not found")
       }
