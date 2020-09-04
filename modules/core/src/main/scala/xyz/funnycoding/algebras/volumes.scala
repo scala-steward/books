@@ -1,9 +1,9 @@
-package xyz.funnycoding.gc
+package xyz.funnycoding.algebras
 
 import cats.effect.Sync
-import org.http4s._
 import cats.implicits._
 import org.http4s.Method._
+import org.http4s._
 import org.http4s.circe._
 import org.http4s.client._
 import org.http4s.client.dsl.Http4sClientDsl
@@ -12,7 +12,7 @@ import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
 
 trait Volumes[F[_]] {
-  def get(volumeId: VolumeId): F[Volume]
+  def get(volumeId: VolumeId): F[Option[Volume]]
 }
 
 object LiveVolumes {
@@ -22,25 +22,25 @@ object LiveVolumes {
 }
 
 final class LiveVolumes[F[_]: JsonDecoder: BracketThrow](client: Client[F]) extends Volumes[F] with Http4sClientDsl[F] {
-  override def get(volumeId: VolumeId): F[Volume] = {
-    val value = s"https://www.googleapis.com/books/v1/volumes/${volumeId.value.value}"
+  override def get(volumeId: VolumeId): F[Option[Volume]] =
     Uri
       .fromString(
-        value
+        s"https://www.googleapis.com/books/v1/volumes/${volumeId.value.value}"
       )
       .liftTo[F]
       .flatMap { uri =>
         GET(uri).flatMap { req =>
           client.run(req).use { r =>
             if (r.status == Status.Ok) {
-              r.asJsonDecode[Volume]
+              r.asJsonDecode[Volume].map(_.some)
+            } else if (r.status == Status.ServiceUnavailable) {
+              none[Volume].pure[F]
             } else
               VolumeError(
                 Option(r.status.reason).getOrElse("unknown")
-              ).raiseError[F, Volume]
+              ).raiseError[F, Option[Volume]]
 
           }
         }
       }
-  }
 }

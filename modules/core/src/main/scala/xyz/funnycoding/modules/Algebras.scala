@@ -5,7 +5,6 @@ import cats.implicits._
 import org.http4s.client.Client
 import skunk.Session
 import xyz.funnycoding.algebras._
-import xyz.funnycoding.gc._
 
 object Algebras {
   def make[F[_]: Sync](sessionPool: Resource[F, Session[F]], client: Client[F]): F[Algebras[F]] =
