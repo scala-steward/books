@@ -57,6 +57,8 @@ lazy val core = (project in file("modules/core"))
           Libraries.log4cats,
           Libraries.logback,
           Libraries.skunkCore,
-          Libraries.skunkCirce
+          Libraries.skunkCirce,
+          Libraries.googleBooks,
+          Libraries.newtype
         )
   )
