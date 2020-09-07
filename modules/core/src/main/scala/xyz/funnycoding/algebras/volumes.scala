@@ -53,7 +53,6 @@ final class LiveVolumes[F[_]: JsonDecoder: BracketThrow](client: Client[F]) exte
       )
       .liftTo[F]
       .flatMap { uri =>
-        println(uri)
         GET(uri).flatMap { req =>
           client.run(req).use { r =>
             if (r.status == Status.Ok) {
