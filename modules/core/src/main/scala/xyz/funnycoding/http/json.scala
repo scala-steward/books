@@ -15,24 +15,33 @@ object json extends JsonCodecs {
   implicit def deriveEntityEncoder[F[_]: Applicative, A: Encoder]: EntityEncoder[F, A] = jsonEncoderOf[F, A]
 }
 private[http] trait JsonCodecs {
-  implicit val createBookDecoder = deriveDecoder[CreateBook]
-  implicit val createBookEncoder = deriveEncoder[CreateBook]
+  implicit val createBookDecoder: Decoder[CreateBook] = deriveDecoder[CreateBook]
+  implicit val createBookEncoder: Encoder[CreateBook] = deriveEncoder[CreateBook]
 
-  implicit val bookDecoder = deriveDecoder[Book]
-  implicit val bookEncoder = deriveEncoder[Book]
+  implicit val bookDecoder: Decoder[Book] = deriveDecoder[Book]
+  implicit val bookEncoder: Encoder[Book] = deriveEncoder[Book]
 
-  implicit val volumeInfoDecoder =
+  implicit val volumeInfoDecoder: Decoder[VolumeInfo] =
     deriveDecoder[VolumeInfo]
 
-  implicit val volumeInfoEncoder =
-    deriveEncoder[VolumeInfo]
+  implicit val volumeInfoEncoder: Encoder[VolumeInfo] =
+    deriveEncoder[VolumeInfo].mapJsonObject(
+      _.filter {
+        case ("subtitle", value)    => !value.isNull
+        case ("description", value) => !value.isNull
+        case ("categories", value)  => !value.isNull
+        case ("publisher", value)   => !value.isNull
+        case _                      => true
+      }
+    )
 
-  implicit val volumeDecoder =
+  implicit val volumeDecoder: Decoder[Volume] =
     deriveDecoder[Volume]
 
-  implicit val volumeEncoder =
+  implicit val volumeEncoder: Encoder[Volume] =
     deriveEncoder[Volume]
 
+  implicit val volumesDecoder2: Decoder[Volumes] = deriveDecoder[Volumes]
   // ----- Coercible codecs -----
   implicit def coercibleDecoder[A: Coercible[B, *], B: Decoder]: Decoder[A] =
     Decoder[B].map(_.coerce[A])

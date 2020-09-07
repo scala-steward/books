@@ -16,11 +16,19 @@ final class VolumesRoute[F[_]: Defer: MonadThrow: JsonDecoder](volumes: Volumes[
   private[routes] val prefixPath = "/volumes"
 
   private val httpRoutes = HttpRoutes.of[F] {
+
+    case GET -> Root / "search" =>
+      val searchAuthor   = InAuthor("nader")
+      val searchCategory = InCategory("fiction")
+      val search         = List(searchAuthor, searchCategory).toNel.get
+      Ok(volumes.search(search))
+
     case GET -> Root / NonEmptyStringPathVar(id) =>
       volumes.get(VolumeId(id)).flatMap {
         case Some(v) => Ok(v)
         case None    => NotFound(s"volumeId ${id.value} not found")
       }
+
   }
 
   val routes: HttpRoutes[F] = Router(

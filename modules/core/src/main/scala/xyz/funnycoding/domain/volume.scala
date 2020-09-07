@@ -1,7 +1,9 @@
 package xyz.funnycoding.domain
 
+import cats.data.NonEmptyList
 import eu.timepit.refined.types.string.NonEmptyString
 import io.estatico.newtype.macros.newtype
+
 import scala.util.control.NoStackTrace
 
 object volume {
@@ -16,13 +18,47 @@ object volume {
 
   case class VolumeInfo(
       title: Title,
-      subtitle: Subtitle,
+      subtitle: Option[Subtitle],
       authors: List[Author],
-      description: Description,
-      categories: List[Category]
+      description: Option[Description],
+      categories: Option[List[Category]],
+      publisher: Option[Publisher]
   )
 
   case class Volume(id: VolumeId, volumeInfo: VolumeInfo)
+
+  case class Volumes(totalItems: Int, items: List[Volume])
+
+  type VolumesSearch = NonEmptyList[VolumeSearch]
+
+  object VolumesSearch {
+    def query(volumesSearch: VolumesSearch): String =
+      volumesSearch
+        .foldLeft("") {
+          case (acc, el) => s"$acc+${el.query}"
+        }
+        .tail
+  }
+
+  sealed trait VolumeSearch {
+    def query: String
+  }
+  case class Intitle(value: NonEmptyString) extends VolumeSearch {
+    override def query: String =
+      s"intitle:${value.value}"
+  }
+  case class InAuthor(value: NonEmptyString) extends VolumeSearch {
+    override def query: String =
+      s"inauthor:${value.value}"
+  }
+  case class InPublisher(value: NonEmptyString) extends VolumeSearch {
+    override def query: String =
+      s"inpublisher:${value.value}"
+  }
+  case class InCategory(value: NonEmptyString) extends VolumeSearch {
+    override def query: String =
+      s"subject:${value.value}"
+  }
 
   case class VolumeError(cause: String) extends NoStackTrace
 

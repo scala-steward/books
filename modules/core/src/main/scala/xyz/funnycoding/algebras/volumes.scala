@@ -7,12 +7,14 @@ import org.http4s._
 import org.http4s.circe._
 import org.http4s.client._
 import org.http4s.client.dsl.Http4sClientDsl
+import xyz.funnycoding.domain.volume
 import xyz.funnycoding.domain.volume._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
 
 trait Volumes[F[_]] {
   def get(volumeId: VolumeId): F[Option[Volume]]
+  def search(volumesSearch: VolumesSearch): F[List[Volume]]
 }
 
 object LiveVolumes {
@@ -43,4 +45,26 @@ final class LiveVolumes[F[_]: JsonDecoder: BracketThrow](client: Client[F]) exte
           }
         }
       }
+
+  override def search(volumesSearch: VolumesSearch): F[List[Volume]] =
+    Uri
+      .fromString(
+        s"https://www.googleapis.com/books/v1/volumes?q=${VolumesSearch.query(volumesSearch)}"
+      )
+      .liftTo[F]
+      .flatMap { uri =>
+        println(uri)
+        GET(uri).flatMap { req =>
+          client.run(req).use { r =>
+            if (r.status == Status.Ok) {
+              r.asJsonDecode[volume.Volumes].map(_.items)
+            } else
+              VolumeError(
+                Option(r.status.reason).getOrElse("unknown")
+              ).raiseError[F, List[Volume]]
+
+          }
+        }
+      }
+
 }
