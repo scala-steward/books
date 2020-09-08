@@ -2,7 +2,7 @@ PostgreSQL:
   restart: always
   image: postgres:12.0-alpine
   ports:
-    - "5432:5432"
+    - "5432:5433"
   environment:
     - DEBUG=false
     - POSTGRES_DB=booksdb
