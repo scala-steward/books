@@ -2,6 +2,7 @@ package xyz.funnycoding.algebras
 
 import cats.effect.Sync
 import cats.implicits._
+import fs2.Stream
 import org.http4s.Method._
 import org.http4s._
 import org.http4s.circe._
@@ -15,6 +16,7 @@ import xyz.funnycoding.http.json._
 trait Volumes[F[_]] {
   def get(volumeId: VolumeId): F[Option[Volume]]
   def search(volumesSearch: VolumesSearch): F[List[Volume]]
+  def searchStream(volumesSearch: VolumesSearch): F[Stream[F, Volume]]
 }
 
 object LiveVolumes {
@@ -65,5 +67,6 @@ final class LiveVolumes[F[_]: JsonDecoder: BracketThrow](client: Client[F]) exte
           }
         }
       }
-
+  // TODO implement me
+  override def searchStream(volumesSearch: VolumesSearch): F[Stream[F, Volume]] = ???
 }

@@ -28,8 +28,6 @@ object Dependencies {
     val scalaTest     = "3.2.2"
     val scalaTestPlus = "3.2.2.0"
 
-    // google books
-    val googlebooks = "v1-rev114-1.25.0"
   }
 
   object Libraries {
@@ -86,8 +84,6 @@ object Dependencies {
     val scalaTest     = "org.scalatest"     %% "scalatest"       % Versions.scalaTest
     val scalaTestPlus = "org.scalatestplus" %% "scalacheck-1-14" % Versions.scalaTestPlus
 
-    // google books
-    val googleBooks = "com.google.apis" % "google-api-services-books" % Versions.googlebooks
   }
 
 }
