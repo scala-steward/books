@@ -16,6 +16,8 @@ object Dependencies {
     val log4cats      = "1.1.1"
     val newtype       = "0.4.3"
     val refined       = "0.9.15"
+    val elastic4cats = "6.7.8"
+    val elastic4circe = "6.7.8"
     val redis4cats    = "0.10.2"
     val skunk         = "0.0.18"
     val squants       = "1.7.0"
@@ -66,6 +68,8 @@ object Dependencies {
 
     val javaxCrypto = "javax.xml.crypto" % "jsr105-api" % Versions.javaxCrypto
 
+    val elastic4scatsEffects = "com.sksamuel.elastic4s" %% "elastic4s-cats-effect" % Versions.elastic4cats
+    val elastic4scirce = "com.sksamuel.elastic4s" %% "elastic4s-circe" % Versions.elastic4circe
     val redis4catsEffects  = "dev.profunktor" %% "redis4cats-effects"  % Versions.redis4cats
     val redis4catsLog4cats = "dev.profunktor" %% "redis4cats-log4cats" % Versions.redis4cats
 

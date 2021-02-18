@@ -7,7 +7,7 @@ import eu.timepit.refined.types.string.NonEmptyString
 import scala.concurrent.duration.FiniteDuration
 
 object data {
-  case class AppConfig(postgreSQL: PostgreSQLConfig, httpClient: HttpClientConfig)
+  case class AppConfig(postgreSQL: PostgreSQLConfig, httpClient: HttpClientConfig, els: ElsConfig)
 
   case class PostgreSQLConfig(
       host: NonEmptyString,
@@ -20,5 +20,10 @@ object data {
   case class HttpClientConfig(
       connectTimeout: FiniteDuration,
       requestTimeout: FiniteDuration
+  )
+
+  case class ElsConfig(
+      host: String,
+      port: UserPortNumber
   )
 }

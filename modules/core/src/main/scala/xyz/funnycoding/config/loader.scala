@@ -20,6 +20,10 @@ object load {
         HttpClientConfig(
           connectTimeout = 2.seconds,
           requestTimeout = 2.seconds
+        ),
+        ElsConfig(
+          host = "http://localhost",
+          port = 9200
         )
       )
     )

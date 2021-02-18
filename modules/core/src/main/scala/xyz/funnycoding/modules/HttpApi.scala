@@ -16,8 +16,9 @@ object HttpApi {
 }
 
 class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
-  private val booksRoute   = new BooksRoute[F](algebras.books).routes
-  private val volumesRoute = new VolumesRoute[F](algebras.volumes).routes
+  private val companiesRoute = new CompaniesRoute[F](algebras.companies).routes
+  private val employeesRoute = new EmployeesRoute[F](algebras.employees).routes
+  private val healthCheckRoute = new HealthCheckRoute[F](algebras.healthcheck).routes
 
   private val middleware: HttpRoutes[F] => HttpRoutes[F] = {
     { http: HttpRoutes[F] =>
@@ -37,5 +38,5 @@ class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
     }
   }
 
-  val httpApp: HttpApp[F] = loggers(middleware(booksRoute <+> volumesRoute).orNotFound)
+  val httpApp: HttpApp[F] = loggers(middleware(healthCheckRoute <+> employeesRoute <+> companiesRoute).orNotFound)
 }

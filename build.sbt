@@ -59,6 +59,8 @@ lazy val core = (project in file("modules/core"))
           Libraries.skunkCore,
           Libraries.skunkCirce,
           Libraries.newtype,
-          Libraries.fs2
+          Libraries.fs2,
+          Libraries.elastic4scatsEffects,
+          Libraries.elastic4scirce
         )
   )
