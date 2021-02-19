@@ -9,6 +9,8 @@ import scala.util.control.NoStackTrace
 object data {
 
   sealed trait EditorialLine
+  case object Fiction extends EditorialLine
+  case object Youth extends EditorialLine
 
   case class CreateBook(name: NonEmptyString)
 
@@ -24,18 +26,41 @@ object data {
                       phone: String,
                       editorialLine: EditorialLine)
 
-  case class Company(name: String,
+  case class Company(id: UUID,
+                     name: String,
                      adresse: String,
                      language: String,
-                     // TODO fix me
+                     // TODO [nh] fix me
 //                     mail: Email,
                      mail: String,
                      vatNumber: String,
                      phone: String,
                      employees: List[Employee])
 
+  object Company {
+    def fromRequest(companyRequest: CompanyRequest, id: UUID): Company =
+      Company(
+        id = id,
+        name = companyRequest.name,
+        adresse = companyRequest.adresse,
+        language = companyRequest.language,
+        mail = companyRequest.mail,
+        vatNumber = companyRequest.vatNumber,
+        phone = companyRequest.phone,
+        employees = Nil
+      )
+  }
 
-  case object Fiction extends EditorialLine
-  case object Youth extends EditorialLine
+  case class CompanyRequest(name: String,
+                            adresse: String,
+                            language: String,
+                            // TODO [nh] fix me
+                            mail: String,
+                            vatNumber: String,
+                            phone: String)
+
+  case class InsertCompanyFailed(companyRequest: CompanyRequest) extends NoStackTrace
+  case class DeleteCompanyFailed(id: UUID) extends NoStackTrace
+  case class LoadCompaniesFailed() extends NoStackTrace
 
 }
