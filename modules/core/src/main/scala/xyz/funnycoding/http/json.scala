@@ -8,8 +8,10 @@ import io.estatico.newtype._
 import io.estatico.newtype.ops._
 import org.http4s.EntityEncoder
 import org.http4s.circe.jsonEncoderOf
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
+import xyz.funnycoding.domain.employees
 import xyz.funnycoding.domain.healthcheck.AppStatus
+import xyz.funnycoding.domain.employees._
 import xyz.funnycoding.domain.volume._
 
 object json extends JsonCodecs {
@@ -45,12 +47,24 @@ private[http] trait JsonCodecs {
 
   implicit val volumesDecoder2: Decoder[Volumes] = deriveDecoder[Volumes]
 
-  implicit val editorialLineDecoder: Decoder[EditorialLine] = deriveDecoder[EditorialLine]
+  implicit val editorialLineDecoder: Decoder[EditorialLine] = Decoder.decodeString.emap {str =>
+    str.toUpperCase match {
+      case "FICTION" => Right(Fiction)
+      case "YOUTH" => Right(Youth)
+      case _ => Left(str)
+    }
+  }
 
-  implicit val editorialLineEncoder: Encoder[EditorialLine] = deriveEncoder[EditorialLine]
+  implicit val editorialLineEncoder: Encoder[EditorialLine] = Encoder.encodeString.contramap[EditorialLine] {
+    case employees.Fiction => "FICTION"
+    case employees.Youth => "YOUTH"
+  }
 
   implicit val companyEmployeeEncoder: Encoder[Employee] = deriveEncoder[Employee]
   implicit val companyEmployeeDecoder: Decoder[Employee] = deriveDecoder[Employee]
+
+  implicit val employeeRequestEncoder: Encoder[EmployeeRequest] = deriveEncoder[EmployeeRequest]
+  implicit val employeeRequestDecoder: Decoder[EmployeeRequest] = deriveDecoder[EmployeeRequest]
 
   implicit val companyEncoder: Encoder[Company] = deriveEncoder[Company]
   implicit val companyDecoder: Decoder[Company] = deriveDecoder[Company]

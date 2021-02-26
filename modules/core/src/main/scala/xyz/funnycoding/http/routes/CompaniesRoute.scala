@@ -7,7 +7,7 @@ import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import xyz.funnycoding.algebras.Companies
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.decoder._
 import xyz.funnycoding.http.json._

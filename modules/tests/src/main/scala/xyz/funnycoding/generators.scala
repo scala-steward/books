@@ -4,7 +4,7 @@ import cats.data.NonEmptyList
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.types.string.NonEmptyString
 import org.scalacheck.Gen
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.domain.volume._
 
 object generators {

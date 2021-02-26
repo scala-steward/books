@@ -18,7 +18,9 @@ object Algebras {
       volumes <- LiveVolumes.make(client)
       books <- LiveBooks.make[F](sessionPool)
       companies <- LiveCompanies.make[F](els)
-      employees <- LiveEmployees.make[F]()
+      _ <- companies.init()
+      employees <- LiveEmployees.make[F](els)
+      _ <- employees.init()
       healthcheck <- LiveHealthCheck.make[F](sessionPool, els)
     } yield new Algebras(volumes, books, companies, employees, healthcheck)
 }

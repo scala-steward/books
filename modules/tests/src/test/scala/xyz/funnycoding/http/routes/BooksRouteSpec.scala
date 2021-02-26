@@ -10,7 +10,7 @@ import org.http4s.{ Status, Uri }
 import suite.HttpTestSuite
 import xyz.funnycoding.algebras.Books
 import xyz.funnycoding.http.json._
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.arbitrairies._
 
 class BooksRouteSpec extends HttpTestSuite {

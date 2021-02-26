@@ -1,7 +1,7 @@
 package xyz.funnycoding
 
 import org.scalacheck.Arbitrary
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.domain.volume._
 import xyz.funnycoding.generators._
 

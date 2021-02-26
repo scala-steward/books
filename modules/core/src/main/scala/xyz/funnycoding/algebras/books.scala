@@ -8,7 +8,7 @@ import eu.timepit.refined.types.string.NonEmptyString
 import skunk._
 import skunk.codec.all._
 import skunk.implicits._
-import xyz.funnycoding.domain.data._
+import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.effects._
 
 trait Books[F[_]] {
