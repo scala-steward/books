@@ -8,7 +8,6 @@ import xyz.funnycoding.modules._
 
 import scala.concurrent.ExecutionContext
 
-
 object Main extends IOApp {
 
   implicit val logger = Slf4jLogger.getLogger[IO]
@@ -25,14 +24,14 @@ object Main extends IOApp {
               api <- HttpApi.make[IO](algebras)
               _ <- Logger[IO].info("starting web server")
               _ <- BlazeServerBuilder[IO](ExecutionContext.global)
-                .bindHttp(
-                  port = 8080,
-                  host = "0.0.0.0"
-                )
-                .withHttpApp(api.httpApp)
-                .serve
-                .compile
-                .drain
+                    .bindHttp(
+                      port = 8080,
+                      host = "0.0.0.0"
+                    )
+                    .withHttpApp(api.httpApp)
+                    .serve
+                    .compile
+                    .drain
             } yield ExitCode.Success
           }
         }

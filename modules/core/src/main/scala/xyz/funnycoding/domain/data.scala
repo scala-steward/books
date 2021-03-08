@@ -18,24 +18,28 @@ object data {
 
   case class BookNameInUse(name: NonEmptyString) extends NoStackTrace
 
-  case class Employee(company: String,
-                      firstName: String,
-                      lastName: String,
-                      address: String,
-                      email: Email,
-                      phone: String,
-                      editorialLine: EditorialLine)
+  case class Employee(
+      company: String,
+      firstName: String,
+      lastName: String,
+      address: String,
+      email: Email,
+      phone: String,
+      editorialLine: EditorialLine
+  )
 
-  case class Company(id: UUID,
-                     name: String,
-                     adresse: String,
-                     language: String,
-                     // TODO [nh] fix me
+  case class Company(
+      id: UUID,
+      name: String,
+      adresse: String,
+      language: String,
+      // TODO [nh] fix me
 //                     mail: Email,
-                     mail: String,
-                     vatNumber: String,
-                     phone: String,
-                     employees: List[Employee])
+      mail: String,
+      vatNumber: String,
+      phone: String,
+      employees: List[Employee]
+  )
 
   object Company {
     def fromRequest(companyRequest: CompanyRequest, id: UUID): Company =
@@ -51,13 +55,15 @@ object data {
       )
   }
 
-  case class CompanyRequest(name: String,
-                            adresse: String,
-                            language: String,
-                            // TODO [nh] fix me
-                            mail: String,
-                            vatNumber: String,
-                            phone: String)
+  case class CompanyRequest(
+      name: String,
+      adresse: String,
+      language: String,
+      // TODO [nh] fix me
+      mail: String,
+      vatNumber: String,
+      phone: String
+  )
 
   case class InsertCompanyFailed(companyRequest: CompanyRequest) extends NoStackTrace
   case class DeleteCompanyFailed(id: UUID) extends NoStackTrace

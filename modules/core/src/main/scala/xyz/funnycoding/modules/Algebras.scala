@@ -1,9 +1,9 @@
 package xyz.funnycoding.modules
 
 import cats.Parallel
-import cats.effect.{Concurrent, Resource, Sync, Timer}
+import cats.effect.{ Concurrent, Resource, Sync, Timer }
 import cats.implicits._
-import com.sksamuel.elastic4s.http.{ElasticClient, Executor, Functor}
+import com.sksamuel.elastic4s.http.{ ElasticClient, Executor, Functor }
 import io.chrisdavenport.log4cats.Logger
 import org.http4s.client.Client
 import skunk.Session
@@ -13,7 +13,8 @@ object Algebras {
   def make[F[_]: Concurrent: Parallel: Timer: Logger](
       sessionPool: Resource[F, Session[F]],
       client: Client[F],
-      els: ElasticClient)(implicit U: Functor[F], E: Executor[F]): F[Algebras[F]] =
+      els: ElasticClient
+  )(implicit U: Functor[F], E: Executor[F]): F[Algebras[F]] =
     for {
       volumes <- LiveVolumes.make(client)
       books <- LiveBooks.make[F](sessionPool)

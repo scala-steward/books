@@ -18,41 +18,42 @@ trait Companies[F[_]] {
   def delete(id: UUID): F[Unit]
 }
 
-final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticClient)(implicit
+final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticClient)(
+    implicit
     U: Functor[F],
-    E: Executor[F])
-    extends Companies[F] {
+    E: Executor[F]
+) extends Companies[F] {
   import com.sksamuel.elastic4s.http.ElasticDsl._
 
-  private val index = "companies"
+  private val index  = "companies"
   private val `type` = "company"
 
   override def init(): F[Unit] =
-    els.execute(
-      createIndex(index)
-    ).flatMap {
-      case RequestFailure(_, _, _, e) =>
-        Logger[F].error(s"failed to init index $index cause: $e")
-      case RequestSuccess(_, _, _, _) =>
-        Logger[F].info(s"index $index created")
-    }
+    els
+      .execute(
+        createIndex(index)
+      )
+      .flatMap {
+        case RequestFailure(_, _, _, e) =>
+          Logger[F].error(s"failed to init index $index cause: $e")
+        case RequestSuccess(_, _, _, _) =>
+          Logger[F].info(s"index $index created")
+      }
 
-  override def findAll: F[List[Company]] = {
+  override def findAll: F[List[Company]] =
     searchCompanies.flatMap {
       case RequestFailure(_, _, _, e) =>
         Logger[F].error(s"failed to load companies cause: $e") *>
-          MonadThrow[F].raiseError(LoadCompaniesFailed())
+            MonadThrow[F].raiseError(LoadCompaniesFailed())
       case RequestSuccess(_, _, _, r) =>
         (for {
           res <- r.to[Company].toList
         } yield res).traverse(_.pure[F])
     }
 
-  }
-
   val searchCompanies = els.execute(search(index).query(matchAllQuery()))
 
-  override def insert(companyRequest: CompanyRequest): F[Unit] = {
+  override def insert(companyRequest: CompanyRequest): F[Unit] =
     GenUUID[F].make.flatMap { id =>
       els
         .execute(
@@ -64,12 +65,11 @@ final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
         .flatMap {
           case RequestFailure(_, _, _, e) =>
             Logger[F].error(s"failed to insert company with id ${id.toString}: $companyRequest \n cause: $e") *>
-              MonadThrow[F].raiseError(InsertCompanyFailed(companyRequest))
+                MonadThrow[F].raiseError(InsertCompanyFailed(companyRequest))
           case RequestSuccess(_, _, _, _) =>
             Logger[F].info(s"company: $companyRequest inserted")
         }
     }
-  }
 
   override def delete(id: UUID): F[Unit] =
     els
@@ -79,7 +79,7 @@ final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
       .flatMap {
         case RequestFailure(_, _, _, e) =>
           Logger[F].error(s"failed to delete company with id ${id.toString} \n cause: $e") *>
-            MonadThrow[F].raiseError(DeleteCompanyFailed(id))
+              MonadThrow[F].raiseError(DeleteCompanyFailed(id))
         case RequestSuccess(_, _, _, _) =>
           Logger[F].info(s"company: ${id.toString} deleted")
       }
@@ -87,7 +87,8 @@ final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
 
 object LiveCompanies {
   def make[F[_]: Sync: Logger: MonadThrow](
-      els: ElasticClient)(implicit U: Functor[F], E: Executor[F]): F[Companies[F]] =
+      els: ElasticClient
+  )(implicit U: Functor[F], E: Executor[F]): F[Companies[F]] =
     Sync[F].delay {
       new LiveCompanies[F](els)
     }

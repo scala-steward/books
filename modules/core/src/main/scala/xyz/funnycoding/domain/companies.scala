@@ -14,16 +14,18 @@ object companies {
 
   case class BookNameInUse(name: NonEmptyString) extends NoStackTrace
 
-  case class Company(id: UUID,
-                     name: String,
-                     address: String,
-                     language: String,
-                     // TODO [nh] fix me
-                     //                     mail: Email,
-                     email: String,
-                     vatNumber: String,
-                     phone: String,
-                     employees: List[Employee])
+  case class Company(
+      id: UUID,
+      name: String,
+      address: String,
+      language: String,
+      // TODO [nh] fix me
+      //                     mail: Email,
+      email: String,
+      vatNumber: String,
+      phone: String,
+      employees: List[Employee]
+  )
 
   object Company {
     def fromRequest(companyRequest: CompanyRequest, id: UUID): Company =
@@ -39,14 +41,15 @@ object companies {
       )
   }
 
-  case class CompanyRequest(name: String,
-                            address: String,
-                            language: String,
-                            // TODO [nh] fix me
-                            email: String,
-                            vatNumber: String,
-                            phone: String)
-
+  case class CompanyRequest(
+      name: String,
+      address: String,
+      language: String,
+      // TODO [nh] fix me
+      email: String,
+      vatNumber: String,
+      phone: String
+  )
 
   case class InsertCompanyFailed(companyRequest: CompanyRequest) extends NoStackTrace
   case class DeleteCompanyFailed(id: UUID) extends NoStackTrace

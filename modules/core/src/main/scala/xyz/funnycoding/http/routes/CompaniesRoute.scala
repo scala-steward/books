@@ -19,8 +19,9 @@ final class CompaniesRoute[F[_]: Defer: MonadThrow: JsonDecoder](companies: Comp
     case GET -> Root =>
       companies.findAll
         .flatMap(Ok(_))
-        .recoverWith { case _: LoadCompaniesFailed =>
-          InternalServerError()
+        .recoverWith {
+          case _: LoadCompaniesFailed =>
+            InternalServerError()
         }
 
     case req @ POST -> Root =>
@@ -28,14 +29,16 @@ final class CompaniesRoute[F[_]: Defer: MonadThrow: JsonDecoder](companies: Comp
         companies
           .insert(companyRequest)
           .flatMap(Created(_))
-          .recoverWith { case InsertCompanyFailed(_) =>
-            InternalServerError()
+          .recoverWith {
+            case InsertCompanyFailed(_) =>
+              InternalServerError()
           }
       }
 
     case DELETE -> Root / UUIDVar(id) =>
-      companies.delete(id).flatMap(Ok(_)).recoverWith { case DeleteCompanyFailed(_) =>
-        InternalServerError()
+      companies.delete(id).flatMap(Ok(_)).recoverWith {
+        case DeleteCompanyFailed(_) =>
+          InternalServerError()
       }
   }
 

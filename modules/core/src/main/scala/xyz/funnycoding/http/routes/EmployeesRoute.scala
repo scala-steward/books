@@ -17,9 +17,9 @@ final class EmployeesRoute[F[_]: Defer: MonadThrow: JsonDecoder](employees: Empl
 
   private val httpRoutes = HttpRoutes.of[F] {
     case GET -> Root =>
-    Ok(
-      employees.findAll()
-    )
+      Ok(
+        employees.findAll()
+      )
     case req @ POST -> Root =>
       req.decodeR[EmployeeRequest] { employeeRequest =>
         employees

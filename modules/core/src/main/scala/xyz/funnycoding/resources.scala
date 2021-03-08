@@ -2,7 +2,7 @@ package xyz.funnycoding
 
 import cats.effect._
 import cats.implicits._
-import com.sksamuel.elastic4s.http.{ElasticClient, ElasticProperties}
+import com.sksamuel.elastic4s.http.{ ElasticClient, ElasticProperties }
 import io.chrisdavenport.log4cats.Logger
 import skunk._
 import xyz.funnycoding.config.data._
@@ -12,9 +12,7 @@ import org.http4s.client.blaze.BlazeClientBuilder
 
 import scala.concurrent.ExecutionContext
 
-final case class AppResources[F[_]](psql: Resource[F, Session[F]],
-                                    client: Client[F],
-                                    els: Resource[F, ElasticClient])
+final case class AppResources[F[_]](psql: Resource[F, Session[F]], client: Client[F], els: Resource[F, ElasticClient])
 
 object AppResources {
   def make[F[_]: ConcurrentEffect: ContextShift: Logger](appConfig: AppConfig): Resource[F, AppResources[F]] = {
@@ -42,9 +40,12 @@ object AppResources {
             )
           )
         }
-      }(c => ConcurrentEffect[F].delay {
-        c.close()
-      })
+      }(
+        c =>
+          ConcurrentEffect[F].delay {
+            c.close()
+          }
+      )
     }
 
     (mkPostgreSqlResource(appConfig.postgreSQL), mkHttpClient(appConfig.httpClient), mkElsClient(appConfig.els))

@@ -16,8 +16,8 @@ object HttpApi {
 }
 
 class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
-  private val companiesRoute = new CompaniesRoute[F](algebras.companies).routes
-  private val employeesRoute = new EmployeesRoute[F](algebras.employees).routes
+  private val companiesRoute   = new CompaniesRoute[F](algebras.companies).routes
+  private val employeesRoute   = new EmployeesRoute[F](algebras.employees).routes
   private val healthCheckRoute = new HealthCheckRoute[F](algebras.healthcheck).routes
 
   private val middleware: HttpRoutes[F] => HttpRoutes[F] = {

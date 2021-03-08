@@ -47,17 +47,17 @@ private[http] trait JsonCodecs {
 
   implicit val volumesDecoder2: Decoder[Volumes] = deriveDecoder[Volumes]
 
-  implicit val editorialLineDecoder: Decoder[EditorialLine] = Decoder.decodeString.emap {str =>
+  implicit val editorialLineDecoder: Decoder[EditorialLine] = Decoder.decodeString.emap { str =>
     str.toUpperCase match {
       case "FICTION" => Right(Fiction)
-      case "YOUTH" => Right(Youth)
-      case _ => Left(str)
+      case "YOUTH"   => Right(Youth)
+      case _         => Left(str)
     }
   }
 
   implicit val editorialLineEncoder: Encoder[EditorialLine] = Encoder.encodeString.contramap[EditorialLine] {
     case employees.Fiction => "FICTION"
-    case employees.Youth => "YOUTH"
+    case employees.Youth   => "YOUTH"
   }
 
   implicit val companyEmployeeEncoder: Encoder[Employee] = deriveEncoder[Employee]
