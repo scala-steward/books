@@ -20,7 +20,7 @@ object companies {
       address: String,
       language: String,
       // TODO [nh] fix me
-      //                     mail: Email,
+      //mail: Email,
       email: String,
       vatNumber: String,
       phone: String,
