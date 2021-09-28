@@ -28,3 +28,4 @@ project/metals.sbt
 .bloop/
 .metals/
 project/.bloop/
+.bsp

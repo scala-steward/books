@@ -1,9 +1,9 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "2.13.3"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "xyz.funnycoding"
 ThisBuild / organizationName := "funnycoding"
+ThisBuild / scalaVersion := "2.13.3"
 
 lazy val root = (project in file("."))
   .settings(
@@ -33,7 +33,7 @@ lazy val core = (project in file("modules/core"))
   .enablePlugins(AshScriptPlugin)
   .settings(
     name := "books-core",
-    packageName in Docker := "books",
+    Docker / packageName := "books",
     scalacOptions += "-Ymacro-annotations",
     scalafmtOnCompile := true,
     resolvers += Resolver.sonatypeRepo("snapshots"),
