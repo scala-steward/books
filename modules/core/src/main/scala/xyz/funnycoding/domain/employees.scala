@@ -2,11 +2,15 @@ package xyz.funnycoding.domain
 
 import java.util.UUID
 import scala.util.control.NoStackTrace
+import enumeratum._
 
 object employees {
-  sealed trait EditorialLine
-  case object Fiction extends EditorialLine
-  case object Youth extends EditorialLine
+  sealed trait EditorialLine extends EnumEntry with EnumEntry.UpperSnakecase
+  object EditorialLine extends Enum[EditorialLine] {
+    val values = findValues
+    case object Fiction extends EditorialLine
+    case object Youth extends EditorialLine
+  }
 
   case class Employee(
       id: UUID,

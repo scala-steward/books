@@ -10,7 +10,7 @@ object Dependencies {
     val circe         = "0.13.0"
     val ciris         = "1.2.0"
     val javaxCrypto   = "1.0.1"
-    val fs2           = "2.4.4"
+    val fs2           = "2.4.6"
     val http4s        = "0.21.7"
     val http4sJwtAuth = "0.0.5"
     val log4cats      = "1.1.1"
@@ -23,10 +23,10 @@ object Dependencies {
     val squants       = "1.7.0"
 
     val betterMonadicFor = "0.3.1"
-    val kindProjector    = "0.11.3"
+    val kindProjector    = "0.13.2"
     val logback          = "1.2.6"
 
-    val scalaCheck    = "1.14.3"
+    val scalaCheck    = "1.15.4"
     val scalaTest     = "3.2.2"
     val scalaTestPlus = "3.2.2.0"
 
