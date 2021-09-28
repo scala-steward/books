@@ -9,10 +9,10 @@ import io.estatico.newtype.ops._
 import org.http4s.EntityEncoder
 import org.http4s.circe.jsonEncoderOf
 import xyz.funnycoding.domain.companies._
-import xyz.funnycoding.domain.employees
 import xyz.funnycoding.domain.healthcheck.AppStatus
 import xyz.funnycoding.domain.employees._
 import xyz.funnycoding.domain.volume._
+import scala.util.Try
 
 object json extends JsonCodecs {
   implicit def deriveEntityEncoder[F[_]: Applicative, A: Encoder]: EntityEncoder[F, A] = jsonEncoderOf[F, A]
@@ -47,17 +47,14 @@ private[http] trait JsonCodecs {
 
   implicit val volumesDecoder2: Decoder[Volumes] = deriveDecoder[Volumes]
 
-  implicit val editorialLineDecoder: Decoder[EditorialLine] = Decoder.decodeString.emap { str =>
-    str.toUpperCase match {
-      case "FICTION" => Right(Fiction)
-      case "YOUTH"   => Right(Youth)
-      case _         => Left(str)
+  implicit val editorialLineDecoder: Decoder[EditorialLine] = Decoder.decodeString.emapTry { str =>
+    Try {
+      EditorialLine.withName(str.toUpperCase)
     }
   }
 
   implicit val editorialLineEncoder: Encoder[EditorialLine] = Encoder.encodeString.contramap[EditorialLine] {
-    case employees.Fiction => "FICTION"
-    case employees.Youth   => "YOUTH"
+    _.entryName
   }
 
   implicit val companyEmployeeEncoder: Encoder[Employee] = deriveEncoder[Employee]
