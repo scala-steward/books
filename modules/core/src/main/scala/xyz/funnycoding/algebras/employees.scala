@@ -72,6 +72,7 @@ final class LiveEmployees[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
         } yield res).traverse(_.pure[F])
     }
 
+  // TODO fix insert, employee must be stored in company
   override def insert(employeeRequest: EmployeeRequest): F[Unit] =
     GenUUID[F].make.flatMap { id =>
       els
