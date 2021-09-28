@@ -45,7 +45,6 @@ lazy val core = (project in file("modules/core"))
     libraryDependencies ++= Seq(
           compilerPlugin(Libraries.kindProjector cross CrossVersion.full),
           compilerPlugin(Libraries.betterMonadicFor),
-          Libraries.cats,
           Libraries.catsEffect,
           Libraries.http4sDsl,
           Libraries.http4sServer,

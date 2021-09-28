@@ -3,7 +3,6 @@ import sbt._
 object Dependencies {
 
   object Versions {
-    val cats          = "2.1.1"
     val catsEffect    = "2.1.4"
     val catsMeowMtl   = "0.4.1"
     val catsRetry     = "1.1.1"
@@ -16,7 +15,7 @@ object Dependencies {
     val log4cats      = "1.1.1"
     val newtype       = "0.4.3"
     val refined       = "0.9.15"
-    val elastic4cats = "6.7.8"
+    val elastic4cats  = "6.7.8"
     val elastic4circe = "6.7.8"
     val redis4cats    = "0.10.2"
     val skunk         = "0.0.18"
@@ -37,7 +36,6 @@ object Dependencies {
     def ciris(artifact: String): ModuleID  = "is.cir"     %% artifact % Versions.ciris
     def http4s(artifact: String): ModuleID = "org.http4s" %% artifact % Versions.http4s
 
-    val cats        = "org.typelevel"    %% "cats-core"     % Versions.cats
     val catsMeowMtl = "com.olegpy"       %% "meow-mtl-core" % Versions.catsMeowMtl
     val catsEffect  = "org.typelevel"    %% "cats-effect"   % Versions.catsEffect
     val catsRetry   = "com.github.cb372" %% "cats-retry"    % Versions.catsRetry
@@ -69,9 +67,9 @@ object Dependencies {
     val javaxCrypto = "javax.xml.crypto" % "jsr105-api" % Versions.javaxCrypto
 
     val elastic4scatsEffects = "com.sksamuel.elastic4s" %% "elastic4s-cats-effect" % Versions.elastic4cats
-    val elastic4scirce = "com.sksamuel.elastic4s" %% "elastic4s-circe" % Versions.elastic4circe
-    val redis4catsEffects  = "dev.profunktor" %% "redis4cats-effects"  % Versions.redis4cats
-    val redis4catsLog4cats = "dev.profunktor" %% "redis4cats-log4cats" % Versions.redis4cats
+    val elastic4scirce       = "com.sksamuel.elastic4s" %% "elastic4s-circe"       % Versions.elastic4circe
+    val redis4catsEffects    = "dev.profunktor"         %% "redis4cats-effects"    % Versions.redis4cats
+    val redis4catsLog4cats   = "dev.profunktor"         %% "redis4cats-log4cats"   % Versions.redis4cats
 
     val skunkCore  = "org.tpolecat" %% "skunk-core"  % Versions.skunk
     val skunkCirce = "org.tpolecat" %% "skunk-circe" % Versions.skunk
