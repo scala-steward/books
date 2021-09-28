@@ -19,7 +19,7 @@ object Dependencies {
     val elastic4cats = "6.7.8"
     val elastic4circe = "6.7.8"
     val redis4cats    = "0.10.2"
-    val skunk         = "0.0.18"
+    val skunk         = "0.0.28"
     val squants       = "1.7.0"
 
     val betterMonadicFor = "0.3.1"
