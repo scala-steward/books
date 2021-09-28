@@ -53,6 +53,6 @@ object companies {
 
   case class InsertCompanyFailed(companyRequest: CompanyRequest) extends NoStackTrace
   case class DeleteCompanyFailed(id: UUID) extends NoStackTrace
-  case class LoadCompaniesFailed() extends NoStackTrace
+  case class LoadCompaniesFailed(description: String) extends NoStackTrace
 
 }
