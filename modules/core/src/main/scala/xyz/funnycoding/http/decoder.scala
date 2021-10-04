@@ -1,11 +1,11 @@
 package xyz.funnycoding.http
 
 import cats.implicits._
+import cats.MonadThrow
 import io.circe.Decoder
 import org.http4s._
 import org.http4s.dsl.Http4sDsl
 import org.http4s.circe._
-import xyz.funnycoding.effects._
 
 object decoder {
 

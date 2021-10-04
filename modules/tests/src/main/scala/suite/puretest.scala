@@ -17,6 +17,6 @@ trait PureTestSuite extends AsyncFunSuite with ScalaCheckDrivenPropertyChecks wi
     s"$name - ${UUID.randomUUID}"
 
   def spec(testName: String)(f: => IO[Assertion])(implicit pos: Position): Unit =
-    test(mkUnique(testName))(IO.suspend(f).unsafeToFuture())
+    test(mkUnique(testName))(IO.defer(f).unsafeToFuture())
 
 }
