@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   object Versions {
-    val catsEffect    = "2.1.4"
+    val catsEffect    = "2.5.4"
     val catsMeowMtl   = "0.4.1"
     val catsRetry     = "1.1.1"
     val circe         = "0.13.0"
