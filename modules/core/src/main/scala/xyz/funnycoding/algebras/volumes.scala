@@ -2,6 +2,7 @@ package xyz.funnycoding.algebras
 
 import cats.effect.Sync
 import cats.implicits._
+import cats.effect.BracketThrow
 import fs2.Stream
 import org.http4s.Method._
 import org.http4s._
@@ -10,7 +11,6 @@ import org.http4s.client._
 import org.http4s.client.dsl.Http4sClientDsl
 import xyz.funnycoding.domain.volume
 import xyz.funnycoding.domain.volume._
-import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
 
 trait Volumes[F[_]] {

@@ -8,7 +8,7 @@ import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
 import io.chrisdavenport.log4cats.Logger
-
+import cats.MonadThrow
 import java.util.UUID
 
 trait Companies[F[_]] {

@@ -2,6 +2,7 @@ package xyz.funnycoding.algebras
 
 import cats.effect._
 import cats.implicits._
+import cats.MonadThrow
 import com.sksamuel.elastic4s.http._
 import com.sksamuel.elastic4s.circe._
 import xyz.funnycoding.domain.employees._
