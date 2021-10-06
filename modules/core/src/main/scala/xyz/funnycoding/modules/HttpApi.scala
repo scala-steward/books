@@ -24,10 +24,15 @@ class HttpApi[F[_]: Timer: Concurrent](algebras: Algebras[F]) {
     { http: HttpRoutes[F] =>
       AutoSlash(http)
     } andThen { http: HttpRoutes[F] =>
-      CORS(http, CORS.DefaultCORSConfig)
+      CORS.policy.withAllowOriginAll
+        .withAllowCredentials(false)
+        .apply(http)
     } andThen { http: HttpRoutes[F] =>
       Timeout(60.seconds)(http)
     }
+    // val config = CORSConfig.default.withAllowedCredentials(false)
+
+    // val cors = CORS(routes, config)
   }
 
   private val loggers: HttpApp[F] => HttpApp[F] = {
