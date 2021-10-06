@@ -8,7 +8,7 @@ import skunk._
 import xyz.funnycoding.config.data._
 import natchez.Trace.Implicits.noop
 import org.http4s.client._
-import org.http4s.client.blaze.BlazeClientBuilder
+import org.http4s.blaze.client.BlazeClientBuilder
 
 import scala.concurrent.ExecutionContext
 

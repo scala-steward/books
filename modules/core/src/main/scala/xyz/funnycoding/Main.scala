@@ -3,7 +3,7 @@ package xyz.funnycoding
 import cats.effect._
 import io.chrisdavenport.log4cats.Logger
 import io.chrisdavenport.log4cats.slf4j._
-import org.http4s.server.blaze.BlazeServerBuilder
+import org.http4s.blaze.server.BlazeServerBuilder
 import xyz.funnycoding.modules._
 
 import scala.concurrent.ExecutionContext
