@@ -3,7 +3,7 @@ import Dependencies._
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "xyz.funnycoding"
 ThisBuild / organizationName := "funnycoding"
-ThisBuild / scalaVersion := "2.13.3"
+ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
 lazy val root = (project in file("."))
