@@ -1,8 +1,8 @@
 package xyz.funnycoding
 
 import cats.effect._
-import io.chrisdavenport.log4cats.Logger
-import io.chrisdavenport.log4cats.slf4j._
+import org.typelevel.log4cats.Logger
+import org.typelevel.log4cats.slf4j._
 import org.http4s.server.blaze.BlazeServerBuilder
 import xyz.funnycoding.modules._
 

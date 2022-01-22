@@ -3,7 +3,7 @@ package xyz.funnycoding
 import cats.effect._
 import cats.implicits._
 import com.sksamuel.elastic4s.http.{ ElasticClient, ElasticProperties }
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import skunk._
 import xyz.funnycoding.config.data._
 import natchez.Trace.Implicits.noop

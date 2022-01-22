@@ -4,7 +4,7 @@ import cats.Parallel
 import cats.effect.{ Concurrent, Resource, Sync, Timer }
 import cats.implicits._
 import com.sksamuel.elastic4s.http.{ ElasticClient, Executor, Functor }
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import org.http4s.client.Client
 import skunk.Session
 import xyz.funnycoding.algebras._

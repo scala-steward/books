@@ -7,7 +7,7 @@ import com.sksamuel.elastic4s.circe._
 import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import cats.MonadThrow
 import java.util.UUID
 
