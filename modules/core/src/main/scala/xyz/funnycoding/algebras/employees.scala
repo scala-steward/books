@@ -2,12 +2,13 @@ package xyz.funnycoding.algebras
 
 import cats.effect._
 import cats.implicits._
+import cats.MonadThrow
 import com.sksamuel.elastic4s.http._
 import com.sksamuel.elastic4s.circe._
 import xyz.funnycoding.domain.employees._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 
 import java.util.UUID
 
@@ -72,6 +73,7 @@ final class LiveEmployees[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
         } yield res).traverse(_.pure[F])
     }
 
+  // TODO fix insert, employee must be stored in company
   override def insert(employeeRequest: EmployeeRequest): F[Unit] =
     GenUUID[F].make.flatMap { id =>
       els

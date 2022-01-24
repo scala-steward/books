@@ -9,7 +9,6 @@ import org.http4s.server.Router
 import xyz.funnycoding.algebras.Books
 import xyz.funnycoding.http.json._
 import xyz.funnycoding.domain.companies._
-import xyz.funnycoding.effects._
 import xyz.funnycoding.http.decoder._
 
 final class BooksRoute[F[_]: Defer: MonadThrow: JsonDecoder](books: Books[F]) extends Http4sDsl[F] {

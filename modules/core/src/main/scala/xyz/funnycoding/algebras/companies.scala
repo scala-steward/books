@@ -7,8 +7,8 @@ import com.sksamuel.elastic4s.circe._
 import xyz.funnycoding.domain.companies._
 import xyz.funnycoding.effects._
 import xyz.funnycoding.http.json._
-import io.chrisdavenport.log4cats.Logger
-
+import org.typelevel.log4cats.Logger
+import cats.MonadThrow
 import java.util.UUID
 
 trait Companies[F[_]] {
@@ -44,7 +44,7 @@ final class LiveCompanies[F[_]: Sync: Logger: MonadThrow: GenUUID](els: ElasticC
     searchCompanies.flatMap {
       case RequestFailure(_, _, _, e) =>
         Logger[F].error(s"failed to load companies cause: $e") *>
-            MonadThrow[F].raiseError(LoadCompaniesFailed())
+            MonadThrow[F].raiseError(LoadCompaniesFailed(e.reason))
       case RequestSuccess(_, _, _, r) =>
         (for {
           res <- r.to[Company].toList

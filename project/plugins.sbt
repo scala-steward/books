@@ -1,5 +1,5 @@
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat"        % "0.1.20")
 addSbtPlugin("io.spray"                  % "sbt-revolver"        % "0.9.1")
-addSbtPlugin("com.typesafe.sbt"          % "sbt-native-packager" % "1.7.5")
-addSbtPlugin("org.scalameta"             % "sbt-scalafmt"        % "2.4.2")
-addSbtPlugin("com.codecommit"            % "sbt-github-actions"  % "0.13.0")
+addSbtPlugin("com.github.sbt"            % "sbt-native-packager" % "1.9.7")
+addSbtPlugin("org.scalameta"             % "sbt-scalafmt"        % "2.4.6")
+addSbtPlugin("com.codecommit"            % "sbt-github-actions"  % "0.14.2")

@@ -8,7 +8,6 @@ import org.http4s.dsl._
 import org.http4s.server.Router
 import xyz.funnycoding.http.json._
 import xyz.funnycoding.domain.volume._
-import xyz.funnycoding.effects._
 import eu.timepit.refined.auto._
 import xyz.funnycoding.algebras.Volumes
 
