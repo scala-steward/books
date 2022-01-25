@@ -13,7 +13,7 @@ object Dependencies {
     val http4s        = "0.21.31"
     val http4sJwtAuth = "0.0.5"
     val log4cats      = "2.2.0"
-    val newtype       = "0.4.3"
+    val newtype       = "0.4.4"
     val refined       = "0.9.15"
     val elastic4cats  = "6.7.8"
     val elastic4circe = "6.7.8"
