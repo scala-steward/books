@@ -3,16 +3,16 @@ import sbt._
 object Dependencies {
 
   object Versions {
-    val catsEffect    = "2.5.4"
+    val catsEffect    = "3.3.5"
     val catsMeowMtl   = "0.4.1"
     val catsRetry     = "1.1.1"
     val circe         = "0.13.0"
     val ciris         = "1.2.0"
     val javaxCrypto   = "1.0.1"
-    val fs2           = "3.2.4"
-    val http4s        = "0.21.31"
+    val fs2           = "2.5.10"
+    val http4s        = "0.23.9"
     val http4sJwtAuth = "0.0.5"
-    val log4cats      = "1.1.1"
+    val log4cats      = "2.2.0"
     val newtype       = "0.4.3"
     val refined       = "0.9.15"
     val elastic4cats  = "6.7.8"
@@ -23,7 +23,7 @@ object Dependencies {
 
     val betterMonadicFor = "0.3.1"
     val kindProjector    = "0.13.2"
-    val logback          = "1.2.9"
+    val logback          = "1.2.10"
 
     val scalaCheck    = "1.15.4"
     val scalaTest     = "3.2.2"
@@ -61,8 +61,8 @@ object Dependencies {
     val refinedCore = "eu.timepit" %% "refined"      % Versions.refined
     val refinedCats = "eu.timepit" %% "refined-cats" % Versions.refined
 
-    val log4cats = "io.chrisdavenport" %% "log4cats-slf4j" % Versions.log4cats
-    val newtype  = "io.estatico"       %% "newtype"        % Versions.newtype
+    val log4cats = "org.typelevel" %% "log4cats-slf4j" % Versions.log4cats
+    val newtype  = "io.estatico"   %% "newtype"        % Versions.newtype
 
     val javaxCrypto = "javax.xml.crypto" % "jsr105-api" % Versions.javaxCrypto
 
