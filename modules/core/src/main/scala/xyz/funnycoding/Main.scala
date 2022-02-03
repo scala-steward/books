@@ -8,7 +8,7 @@ import xyz.funnycoding.modules._
 
 import scala.concurrent.ExecutionContext
 
-object Main extends IOApp {
+object Main extends IOApp.Simple {
 
   implicit val logger = Slf4jLogger.getLogger[IO]
 
